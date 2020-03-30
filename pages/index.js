@@ -1,31 +1,45 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import TableView from "../src/components/TableView";
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import TableView from '../src/components/TableView';
+import { Button } from '@material-ui/core';
+import { useState } from 'react';
 
-class Trex extends Component {
+function Trex({ initialCups }) {
+  const [cups, setCups] = useState(initialCups);
 
-    state = {
-        //fake data for now
-        cups: [{tableid : 1, cupid : 1, level : .2},
-                {tableid : 1, cupid : 2, level : .2},
-                {tableid : 12, cupid : 1, level : .2},
-                {tableid : 23, cupid : 1, level : .2}]
-    };
+  function refresh() {
+    setCups([
+      { tableid: 1, cupid: 1, level: 1 },
+      { tableid: 1, cupid: 2, level: 1 },
+      { tableid: 12, cupid: 1, level: 1 },
+      { tableid: 23, cupid: 1, level: 1 },
+    ]);
+  }
+  return (
+    <div>
+      <Typography variant="h1" component="h2" gutterBottom align="center">
+        Trex
+      </Typography>
+      <TableView cups={cups} />
+      <button onClick={refresh}>Refresh</button>
+    </div>
+  );
+}
 
+Trex.propTypes = { initialCups: PropTypes.object };
 
-    render(){
-        return(
-            <div className="container">
-                 <Typography variant="h1" component="h2" gutterBottom align="center">
-                    Trex
-                </Typography>
-                    
-                <TableView cups = {this.state.cups}  />
-
-            </div>
-        );
-    }
+//this will be getServerProps
+export async function getStaticProps(context) {
+  return {
+    props: {
+      initialCups: [
+        { tableid: 1, cupid: 1, level: 0.2 },
+        { tableid: 1, cupid: 2, level: 0.2 },
+        { tableid: 12, cupid: 1, level: 0.2 },
+        { tableid: 23, cupid: 1, level: 0.2 },
+      ],
+    },
+  };
 }
 
 export default Trex;
