@@ -22,7 +22,10 @@ export default class MyApp extends App {
       <React.Fragment>
         <Head>
           <title>My page</title>
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width"
+          />
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
@@ -31,7 +34,6 @@ export default class MyApp extends App {
           <Container component="main" maxWidth="lg">
             <Component {...pageProps} />
           </Container>
-          
         </ThemeProvider>
       </React.Fragment>
     );
