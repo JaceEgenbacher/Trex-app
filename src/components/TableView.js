@@ -19,7 +19,7 @@ const TableView = ({cups}) => {
     const classes = useStyles();
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer  component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>

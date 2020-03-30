@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import TableView from "./components/TableView";
-import './App.css'
+import TableView from "../src/components/TableView";
 
 class Trex extends Component {
 
@@ -13,16 +12,17 @@ class Trex extends Component {
                 {tableid : 23, cupid : 1, level : .2}]
     };
 
+
     render(){
         return(
             <div className="container">
                 <h1 className="title">Trex </h1>
                     
-                     <TableView cups = {this.state.cups}  />
-    
+                    <TableView cups = {this.state.cups}  />
+
             </div>
         );
     }
 }
 
-ReactDOM.render(<Trex />, document.getElementById("root"));
+export default Trex;
