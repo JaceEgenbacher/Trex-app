@@ -21,7 +21,11 @@ function Trex({ initialCups }) {
         Trex
       </Typography>
       <TableView cups={cups} />
-      <button onClick={refresh}>Refresh</button>
+      <div align="center">
+        <Button color="primary" onClick={refresh}>
+          Refresh
+        </Button>
+      </div>
     </div>
   );
 }
