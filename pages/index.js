@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import TableView from "../src/components/TableView";
+import Typography from '@material-ui/core/Typography';
 
 class Trex extends Component {
 
@@ -16,9 +17,11 @@ class Trex extends Component {
     render(){
         return(
             <div className="container">
-                <h1 className="title">Trex </h1>
+                 <Typography variant="h1" component="h2" gutterBottom align="center">
+                    Trex
+                </Typography>
                     
-                    <TableView cups = {this.state.cups}  />
+                <TableView cups = {this.state.cups}  />
 
             </div>
         );
