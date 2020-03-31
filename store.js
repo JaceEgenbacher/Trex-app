@@ -53,8 +53,14 @@ function fakeApiCall() {
             x: 0,
             y: 0,
             cups: [
-              { id: 1, level: _.random(0.0, 1.0, true) },
-              { id: 2, level: _.random(0.0, 1.0, true) },
+              {
+                id: 1,
+                level: Math.round(_.random(0.0, 1.0, true) * 100) / 100,
+              },
+              {
+                id: 2,
+                level: Math.round(_.random(0.0, 1.0, true) * 100) / 100,
+              },
             ],
           },
           {
@@ -62,12 +68,18 @@ function fakeApiCall() {
             x: 100,
             y: 100,
             cups: [
-              { id: 3, level: _.random(0.0, 1.0, true) },
-              { id: 4, level: _.random(0.0, 1.0, true) },
+              {
+                id: 3,
+                level: Math.round(_.random(0.0, 1.0, true) * 100) / 100,
+              },
+              {
+                id: 4,
+                level: Math.round(_.random(0.0, 1.0, true) * 100) / 100,
+              },
             ],
           },
         ],
       });
-    }, 250);
+    }, 0);
   });
 }
