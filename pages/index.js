@@ -21,6 +21,7 @@ function Trex({ initialCups }) {
         Trex
       </Typography>
       <TableView cups={cups} />
+
       <div align="center">
         <Button color="primary" onClick={refresh}>
           Refresh
@@ -30,7 +31,7 @@ function Trex({ initialCups }) {
   );
 }
 
-Trex.propTypes = { initialCups: PropTypes.object };
+Trex.propTypes = { initialCups: PropTypes.array };
 
 //this will be getServerProps
 export async function getStaticProps(context) {

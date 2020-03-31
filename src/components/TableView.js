@@ -44,6 +44,6 @@ const TableView = ({ cups }) => {
   );
 };
 
-TableView.propTypes = { cups: PropTypes.object };
+TableView.propTypes = { cups: PropTypes.array };
 
 export default TableView;
