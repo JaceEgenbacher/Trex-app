@@ -3,12 +3,14 @@ import App from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../src/theme';
+import theme from '../lib/theme';
 import Container from '@material-ui/core/Container';
+import { createMuiTheme } from '@material-ui/core';
+import withReduxStore from '../lib/with-redux-store';
+import { Provider } from 'react-redux';
 
-export default class MyApp extends App {
+class MyApp extends App {
   componentDidMount() {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -16,7 +18,16 @@ export default class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const theme = createMuiTheme({
+      palette: {
+        type: 'dark',
+        background: {
+          default: '#303030',
+        },
+      },
+    });
+
+    const { Component, pageProps, reduxStore } = this.props;
 
     return (
       <React.Fragment>
@@ -28,14 +39,13 @@ export default class MyApp extends App {
           />
         </Head>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          {/* Place Header here */}
           <CssBaseline />
-          <Container component="main" maxWidth="lg">
+          <Provider store={reduxStore}>
             <Component {...pageProps} />
-          </Container>
+          </Provider>
         </ThemeProvider>
       </React.Fragment>
     );
   }
 }
+export default withReduxStore(MyApp);
