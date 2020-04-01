@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+1import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 
@@ -40,21 +40,25 @@ export const startClock = (dispatch) => {
     } catch (err) {
       console.error(err);
     }
-  }, 1000);
+  }, 3000);
 };
 
-function fakeApiCall() {
+export function fakeApiCall() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
         tables: [
           {
             id: 1,
-            x: 0,
-            y: 0,
+            x: 100,
+            y: 100,
             cups: [
               {
+<<<<<<< HEAD
                 id: 1,
+=======
+                id: 1,
+>>>>>>> afb4dcb4bc74595b3d9ba32ab64cba28aa069a77
                 level: Math.round(_.random(0.0, 1.0, true) * 100) / 100,
               },
               {
