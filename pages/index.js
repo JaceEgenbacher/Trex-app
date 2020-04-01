@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid';
-import TableView from '../components/TableView';
-import Table from '../components/Table';
+
+import TablesCanvas from '../components/TablesCanvas';
+import CupsList from '../components/CupsList';
 
 import { useEffect } from 'react';
 
@@ -16,15 +17,16 @@ const Index = () => {
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  });
 
   return (
     <Grid container spacing={0}>
       <Grid item xs={9}>
-        <Table></Table>
+        <TablesCanvas />
       </Grid>
+
       <Grid item xs={3}>
-        <TableView></TableView>
+        <CupsList />
       </Grid>
     </Grid>
   );
