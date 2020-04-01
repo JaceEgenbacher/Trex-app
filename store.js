@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+1import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 
@@ -54,7 +54,11 @@ export function fakeApiCall() {
             y: 100,
             cups: [
               {
-                id: "B",
+<<<<<<< HEAD
+                id: 1,
+=======
+                id: 1,
+>>>>>>> afb4dcb4bc74595b3d9ba32ab64cba28aa069a77
                 level: Math.round(_.random(0.0, 1.0, true) * 100) / 100,
               },
               {
