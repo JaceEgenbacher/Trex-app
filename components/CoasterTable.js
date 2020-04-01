@@ -42,6 +42,7 @@ const CoasterTable = () => {
     //     <Stage width={window.innerWidth} height={window.innerHeight}>
     //         {test(setup)}
     //     </Stage>-10
+    //delete thisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
     // );
 
 
