@@ -1,43 +1,37 @@
-import { useSelector } from 'react-redux';
-import { useRef, useState, useEffect } from 'react';
+import { useSelector, Provider, ReactReduxContext } from 'react-redux';
+import { useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
+
+import React from 'react';
 
 import TableShape from './TableShape';
 
 const TablesCanvas = () => {
-  const { tables } = useSelector((state) => ({ tables: state.tables }), []);
-
+  const tables = useSelector((state) => state.tables, []);
   const canvasWrapperRef = useRef(null);
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    if (canvasWrapperRef.current) {
-      setHeight(canvasWrapperRef.current.offsetHeight);
-      setWidth(canvasWrapperRef.current.offsetWidth);
-    }
-  }, [canvasWrapperRef]);
+  const styles = {
+    height: '720px',
+    width: '1280px'
+  };
 
   return (
-    <div
-      className="canvas-wrapper"
-      ref={canvasWrapperRef}
-      style={{ height: '100vh' }}
-    >
-      <Stage
-        width={width}
-        height={height}
-        style={{ 'border-right': '1px solid grey' }}
-      >
-        <Layer>
-          {tables.map((table) => (
-            <TableShape table={table} key={table.id} />
-          ))}
-        </Layer>
-      </Stage>
-    </div>
+    <div ref={canvasWrapperRef} style={styles}>
+      <ReactReduxContext.Consumer>
+        {({ store }) => (
+          <Stage width={1280} height={720} style={{ border: '1px solid grey' }}>
+            <Provider store={store}>
+              <Layer>
+                {tables.map((table) => (
+                  <TableShape table={table} key={table.id} />
+                ))}
+              </Layer>
+            </Provider>
+          </Stage>
+        )}
+      </ReactReduxContext.Consumer>
+    </div >
   );
 };
 
-export default TablesCanvas;
+export default TablesCanvas

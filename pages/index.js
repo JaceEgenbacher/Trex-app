@@ -1,5 +1,4 @@
 import Grid from '@material-ui/core/Grid';
-
 import TablesCanvas from '../components/TablesCanvas';
 import CupsList from '../components/CupsList';
 
@@ -24,7 +23,6 @@ const Index = () => {
       <Grid item xs={9}>
         <TablesCanvas />
       </Grid>
-
       <Grid item xs={3}>
         <CupsList />
       </Grid>
