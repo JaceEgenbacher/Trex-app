@@ -5,21 +5,20 @@ import { Stage, Layer } from 'react-konva';
 import React from 'react';
 
 import TableShape from './TableShape';
-
 const TablesCanvas = () => {
   const tables = useSelector((state) => state.tables, []);
   const canvasWrapperRef = useRef(null);
 
   const styles = {
-    height: '720px',
-    width: '1280px'
+    width: '1200px',
+    height: '800px',
   };
 
   return (
     <div ref={canvasWrapperRef} style={styles}>
       <ReactReduxContext.Consumer>
         {({ store }) => (
-          <Stage width={1280} height={720} style={{ border: '1px solid grey' }}>
+          <Stage width={1200} height={800} style={{ border: '1px solid grey' }}>
             <Provider store={store}>
               <Layer>
                 {tables.map((table) => (
@@ -30,8 +29,8 @@ const TablesCanvas = () => {
           </Stage>
         )}
       </ReactReduxContext.Consumer>
-    </div >
+    </div>
   );
 };
 
-export default TablesCanvas
+export default TablesCanvas;

@@ -7,11 +7,25 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { startClock } from '../store';
 
+import fakeApiCall from '../lib/fakeApi';
+import actionTypes from '../lib/actionTypes';
+
 const Index = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let timer = startClock(dispatch);
+    fakeApiCall().then(({ tables }) => {
+      dispatch({ type: actionTypes.UPDATE_TABLES, tables });
+    });
+
+    let timer = setInterval(async () => {
+      try {
+        const { tables } = await fakeApiCall();
+        dispatch({ type: actionTypes.UPDATE_TABLES, tables });
+      } catch (err) {
+        console.error(err);
+      }
+    }, 3000);
 
     return () => {
       clearInterval(timer);
