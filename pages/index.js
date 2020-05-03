@@ -14,24 +14,24 @@ import { startClock } from '../store';
 
 import fakeApiCall from '../lib/fakeApi';
 import actionTypes from '../lib/actionTypes';
-import getAllCups from '../lib/database';
+import ApiCall from '../lib/database';
 import Alltogether from '../components/Alltogether';
 
 const Index = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    getAllCups().then(({ tables }) => {
+    ApiCall().then(({ tables }) => {
       dispatch({ type: actionTypes.UPDATE_TABLES, tables });
     });
 
     let timer = setInterval(async () => {
       try {
-        const { tables } = await getAllCups();
+        const { tables } = await ApiCall();
         dispatch({ type: actionTypes.UPDATE_TABLES, tables });
       } catch (err) {
         console.error(err);
       }
-    }, 3000);
+    }, 12000);
 
     return () => {
       clearInterval(timer);
