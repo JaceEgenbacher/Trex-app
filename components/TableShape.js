@@ -2,10 +2,13 @@ import { Rect, Group, Text } from 'react-konva';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import actionTypes from '../lib/actionTypes';
 
-const cupSize = 50;
+const cupSize = 25;
 
 function levelToColor(level) {
   const perc = level * 100;
@@ -81,6 +84,7 @@ function roundToFifty(num) {
 }
 
 const TableShape = ({ table }) => {
+  const isDrag = useSelector((state) => state.dragTableId, null);
   const flattenedCups = organizeData(table);
 
   const tables = useSelector((state) => state.tables);
@@ -96,16 +100,28 @@ const TableShape = ({ table }) => {
   return (
     <Group
       draggable
+      onMouseDown={() => {
+        dispatch({
+          type: actionTypes.UPDATE_DISPLAY,
+          displayTableId: table.id,
+        });
+      }}
+      onDragStart={() => {
+        const displayTableId = table.id;
+        dispatch({ type: actionTypes.UPDATE_DRAG, dragTableId: table.id });
+      }}
       onDragEnd={(e) => {
         const x = e.target.x();
         const y = e.target.y();
-
         dispatch(updateTablePos(tables, table.id, x, y));
+        dispatch({ type: actionTypes.UPDATE_DRAG, dragTableId: null });
       }}
       key={table.id}
       x={table.x}
       y={table.y}
       dragBoundFunc={dragBounds}
+      dragDistance="200px"
+      shadowBlur={table.id === isDrag ? 10 : 0}
     >
       {flattenedCups.map((cup) => (
         <Group x={cup.xPixelOffset} y={cup.yPixelOffset} key={cup.id}>
@@ -113,16 +129,16 @@ const TableShape = ({ table }) => {
             width={cupSize}
             height={cupSize}
             fill={levelToColor(cup.level)}
-            stroke="gray"
+            stroke={table.id === isDrag ? 'red' : 'gray'}
             strokeWidth={1}
           />
           <Text
             text={cup.id}
-            fontSize={24}
+            fontSize={12}
             align="center"
             verticalAlign="middle"
-            width={50}
-            height={50}
+            width={cupSize}
+            height={cupSize}
           />
         </Group>
       ))}

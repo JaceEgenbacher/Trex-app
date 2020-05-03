@@ -17,6 +17,7 @@ const CupsList = () => {
   const classes = useStyles();
 
   const { tables } = useSelector((state) => ({ tables: state.tables }), []);
+  const displayTableID = useSelector((state) => state.displayTableId, null);
 
   const tableCups = tables.map((table) => {
     const newCups = table.cups.map((cup) => {
@@ -28,7 +29,9 @@ const CupsList = () => {
   });
 
   const cups = tableCups.flat();
-
+  const selectedCups = cups.filter((cup) => {
+    if (cup.tableId === displayTableID) return cup;
+  });
   return (
     <TableContainer component={Card}>
       <Table stickyHeader className={classes.table}>
@@ -37,14 +40,16 @@ const CupsList = () => {
             <TableCell align="center">Table ID</TableCell>
             <TableCell align="center">Cup ID</TableCell>
             <TableCell align="center">Level</TableCell>
+            <TableCell align="center">Drink</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {cups.map((cup) => (
+          {selectedCups.map((cup) => (
             <TableRow key={cup.id}>
               <TableCell align="center">{cup.tableId}</TableCell>
               <TableCell align="center">{cup.id}</TableCell>
               <TableCell align="center">{cup.level}</TableCell>
+              <TableCell align="center">{cup.drinkDescription}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -8,9 +8,8 @@ import TableShape from './TableShape';
 const TablesCanvas = () => {
   const tables = useSelector((state) => state.tables, []);
   const canvasWrapperRef = useRef(null);
-
   const styles = {
-    width: '1200px',
+    width: '1250px',
     height: '800px',
   };
 
@@ -18,7 +17,7 @@ const TablesCanvas = () => {
     <div ref={canvasWrapperRef} style={styles}>
       <ReactReduxContext.Consumer>
         {({ store }) => (
-          <Stage width={1200} height={800} style={{ border: '1px solid grey' }}>
+          <Stage width={1250} height={800} style={{ border: '1px solid grey' }}>
             <Provider store={store}>
               <Layer>
                 {tables.map((table) => (
