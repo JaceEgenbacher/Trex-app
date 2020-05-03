@@ -107,6 +107,7 @@ const CupsList = () => {
                     <MenuItem
                       key={drink.drinkId}
                       value={drink.drinkDescription}
+                      alignItems="center"
                     >
                       {drink.drinkDescription}
                     </MenuItem>

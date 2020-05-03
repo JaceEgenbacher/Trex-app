@@ -1,0 +1,39 @@
+
+.slide-drawer {
+    height: 100%;
+    margin-top: 440px;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 70%;
+    max-width: 400px;
+    z-index: 200;
+    transform: translateX(-8%);
+    transition: transform 0.3s ease-out;
+  }
+
+  .side-drawer.open {
+    transform: translateX(0);
+  }
+  .slide-drawer a{
+      color: rgb(255, 255, 255);
+      font-size: 30px;
+      text-decoration: none; 
+      border-bottom: 3px solid transparent;
+
+  }
+  .slide-drawer a:hover{
+    border-bottom: 3px solid red;
+    
+  }
+  .slide-drawer a:active{
+      color: blue;
+  }
+ .slide-drawer li{
+    list-style-type: none;
+    padding: 10px 10px;
+    
+  }
+
+  
+ 

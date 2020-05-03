@@ -15,6 +15,7 @@ import { startClock } from '../store';
 import fakeApiCall from '../lib/fakeApi';
 import actionTypes from '../lib/actionTypes';
 import getAllCups from '../lib/database';
+import Alltogether from '../components/Alltogether';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -43,16 +44,23 @@ const Index = () => {
   });
 
   return (
-    <Container maxWidth={false} disableGutters={false}>
-      <Grid container spacing={4}>
-        <Grid item xs={12} sm={6} md={8}>
-          <TablesCanvas />
+    <div>
+      <Container maxWidth={false} disableGutters={false}>
+        <Grid container item xs={12}>
+          <Alltogether />
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <CupsList />
+        <Grid container item xs={12}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} md={8}>
+              <TablesCanvas />
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <CupsList />
+            </Grid>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

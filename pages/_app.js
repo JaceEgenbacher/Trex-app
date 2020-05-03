@@ -7,6 +7,10 @@ import theme from '../lib/theme';
 import withReduxStore from '../lib/with-redux-store';
 import { Provider } from 'react-redux';
 
+import '../components/SlideDrawer/DrawerToggleButton.css';
+import '../components/SlideDrawer/SlideDrawer.css';
+import '../components/Backdrop/Backdrop.css';
+
 class MyApp extends App {
   componentDidMount() {
     const jssStyles = document.querySelector('#jss-server-side');

@@ -18,7 +18,7 @@ const TablesCanvas = () => {
   };
 
   const stageWidth = 1000;
-  const stageHeight = 700;
+  const stageHeight = 650;
 
   function getScale() {
     return size.width / stageWidth;

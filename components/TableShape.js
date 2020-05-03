@@ -79,11 +79,12 @@ function updateTablePos(tables, id, x, y) {
   };
 }
 
-function roundToFifty(num) {
-  return Math.round(num / 50) * 50;
+function roundToFifty(num, scale) {
+  const scaling = 25 * scale;
+  return Math.round(num / scaling) * scaling;
 }
 
-const TableShape = ({ table }) => {
+const TableShape = ({ table, scale }) => {
   const isDrag = useSelector((state) => state.dragTableId, null);
   const flattenedCups = organizeData(table);
 
@@ -92,8 +93,8 @@ const TableShape = ({ table }) => {
 
   function dragBounds(pos) {
     return {
-      x: roundToFifty(pos.x),
-      y: roundToFifty(pos.y),
+      x: roundToFifty(pos.x, scale),
+      y: roundToFifty(pos.y, scale),
     };
   }
 
@@ -120,7 +121,7 @@ const TableShape = ({ table }) => {
       x={table.x}
       y={table.y}
       dragBoundFunc={dragBounds}
-      dragDistance="50"
+      dragDistance={50}
       shadowBlur={table.id === isDrag ? 10 : 0}
     >
       {flattenedCups.map((cup) => (
@@ -148,6 +149,7 @@ const TableShape = ({ table }) => {
 
 TableShape.propTypes = {
   table: PropTypes.object,
+  scale: PropTypes.number,
 };
 
 export default TableShape;
