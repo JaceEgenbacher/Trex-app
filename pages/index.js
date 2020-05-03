@@ -19,19 +19,14 @@ import Alltogether from '../components/Alltogether';
 
 const Index = () => {
   const dispatch = useDispatch();
-  const tables = getAllCups();
   useEffect(() => {
-    /*
-    fakeApiCall().then(({ tables }) => {
+    getAllCups().then(({ tables }) => {
       dispatch({ type: actionTypes.UPDATE_TABLES, tables });
-    });  */
+    });
 
-    dispatch({ type: actionTypes.UPDATE_TABLES, tables });
-
-    /*
     let timer = setInterval(async () => {
       try {
-        const { tables } = await fakeApiCall();
+        const { tables } = await getAllCups();
         dispatch({ type: actionTypes.UPDATE_TABLES, tables });
       } catch (err) {
         console.error(err);
@@ -40,7 +35,7 @@ const Index = () => {
 
     return () => {
       clearInterval(timer);
-    }; */
+    };
   });
 
   return (

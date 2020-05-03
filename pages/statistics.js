@@ -3,14 +3,39 @@ import Container from '@material-ui/core/Container';
 import Alltogether from '../components/Alltogether';
 import { Pie } from 'react-chartjs-2';
 
+function stringToColor(str) {
+  var hash = 0;
+
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  var colour = '#';
+
+  for (var i = 0; i < 3; i++) {
+    var value = (hash >> (i * 8)) & 0xff;
+    colour += ('00' + value.toString(16)).substr(-2);
+  }
+
+  return colour;
+}
+
 const Stats = () => {
   const data = {
-    labels: ['Red', 'Blue', 'Yellow'],
+    labels: ['Coke', 'Pepsi', 'Water'],
     datasets: [
       {
         data: [20, 45, 7],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        backgroundColor: [
+          stringToColor('bird'),
+          stringToColor('box'),
+          stringToColor('lel'),
+        ],
+        hoverBackgroundColor: [
+          stringToColor('asdf'),
+          stringToColor('asdfdd'),
+          stringToColor('asdfdddddd'),
+        ],
       },
     ],
   };
