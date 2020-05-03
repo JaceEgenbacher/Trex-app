@@ -31,7 +31,7 @@ const Index = () => {
       } catch (err) {
         console.error(err);
       }
-    }, 12000);
+    }, 3000);
 
     return () => {
       clearInterval(timer);
