@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import TablesCanvas from '../components/TablesCanvas';
 import CupsList from '../components/CupsList';
 import TableDetails from '../components/TableDetails';
+import Container from '@material-ui/core/Container';
 
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -42,16 +43,16 @@ const Index = () => {
   });
 
   return (
-    <div>
-      <Grid container spacing={0}>
-        <Grid item xs={8}>
+    <Container maxWidth={false} disableGutters={false}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6} md={8}>
           <TablesCanvas />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} md={4}>
           <CupsList />
         </Grid>
       </Grid>
-    </div>
+    </Container>
   );
 };
 
