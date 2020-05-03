@@ -120,7 +120,7 @@ const TableShape = ({ table }) => {
       x={table.x}
       y={table.y}
       dragBoundFunc={dragBounds}
-      dragDistance="200px"
+      dragDistance="50"
       shadowBlur={table.id === isDrag ? 10 : 0}
     >
       {flattenedCups.map((cup) => (

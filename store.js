@@ -12,7 +12,6 @@ const theInitialState = {
 };
 
 export const reducer = (state = exampleInitialState, action) => {
-  console.log('action: ', action);
   switch (action.type) {
     case actionTypes.UPDATE_TABLES:
       return {
