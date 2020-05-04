@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import actionTypes from '../lib/actionTypes';
 
+import axios from 'axios';
+
+
 const cupSize = 25;
 
 function levelToColor(level) {
@@ -116,6 +119,12 @@ const TableShape = ({ table, scale }) => {
         const y = e.target.y();
         dispatch(updateTablePos(tables, table.id, x, y));
         dispatch({ type: actionTypes.UPDATE_DRAG, dragTableId: null });
+        
+        
+        //post info to the database
+        var url = 'http://192.168.0.32/ws/tableLayout/update/updateTable.php?tableNumber=' + table.id + '&x=' + parseInt(x) + '&y=' + parseInt(y);
+        //console.log(url);
+        axios.post(url);
       }}
       key={table.id}
       x={table.x}

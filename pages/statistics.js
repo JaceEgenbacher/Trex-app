@@ -2,6 +2,8 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Alltogether from '../components/Alltogether';
 import { Pie } from 'react-chartjs-2';
+import axios from 'axios';
+
 
 function stringToColor(str) {
   var hash = 0;
@@ -20,21 +22,34 @@ function stringToColor(str) {
   return colour;
 }
 
+
+
 const Stats = () => {
+  
+  
+  
   const data = {
-    labels: ['Coke', 'Pepsi', 'Water'],
+    labels: ['Coke', 'Dr. Pepper', 'Pepsi', 'Root Beer', 'Sprite', 'Cream Soda', 'Tea'],
     datasets: [
       {
-        data: [20, 45, 7],
+        data: [10, 10, 7, 13, 6, 9, 3],
         backgroundColor: [
-          stringToColor('bird'),
-          stringToColor('box'),
-          stringToColor('lel'),
+          '#c70000',
+          '#fc761d',
+          '#fce459',
+          '#03d315',
+          '#02149c',
+          '#f41dfc',
+          '#dd0336',
         ],
         hoverBackgroundColor: [
-          stringToColor('asdf'),
-          stringToColor('asdfdd'),
-          stringToColor('asdfdddddd'),
+          '#c70000',
+          '#fc761d',
+          '#fce459',
+          '#03d315',
+          '#02149c',
+          '#f41dfc',
+          '#dd0336',
         ],
       },
     ],

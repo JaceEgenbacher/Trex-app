@@ -16,6 +16,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { drinkInfo } from '../lib/database';
 
+import axios from 'axios';
+
 import _ from 'lodash';
 
 const useStyles = makeStyles({
@@ -98,9 +100,16 @@ const CupsList = () => {
               <TableCell>
                 <Select
                   value={getDrinkDescription(cup.drinkId)}
-                  onChange={(evt, key, payload) =>
-                    dispatch(updateDrink(tables, cup.id, key.key))
+                  onChange={(evt, key, payload) => {
+                    dispatch(updateDrink(tables, cup.id, key.key));
+                    //key.key = drinkId
+                    //cup.id = coasterid
+                    
+                    var url = 'http://192.168.0.32/ws/coaster/update/updateAll.php?coasterId=' + cup.id + '&drinkId=' + key.key;
+                    axios.post(url);
                   }
+                      
+                }
                   style={{ minWidth: 120 }}
                 >
                   {drinkInfo.map((drink) => (
