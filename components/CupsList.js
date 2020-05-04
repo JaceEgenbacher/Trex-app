@@ -7,16 +7,64 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Card } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+import actionTypes from '../lib/actionTypes';
+
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import { drinkInfo } from '../lib/database';
+
+import axios from 'axios';
+
+import _ from 'lodash';
 
 const useStyles = makeStyles({
   table: {},
 });
 
+function getDrinkDescription(drinkId) {
+  const drink = _.find(drinkInfo, {
+    drinkId,
+  });
+
+  if (drink) {
+    return drink.drinkDescription;
+  }
+
+  return [drinkInfo];
+}
+
+function updateDrink(tables, cupId, drinkId) {
+  const newTables = _.map(tables, (table) => {
+    const newTable = { ...table };
+
+    newTable.cups = _.map(table.cups, (cup) => {
+      const newCup = { ...cup };
+
+      if (cup.id === cupId) {
+        newCup.drinkId = drinkId;
+      }
+
+      return newCup;
+    });
+
+    return newTable;
+  });
+
+  return {
+    type: actionTypes.UPDATE_TABLES,
+    tables: newTables,
+  };
+}
+
 const CupsList = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const { tables } = useSelector((state) => ({ tables: state.tables }), []);
+  const displayTableID = useSelector((state) => state.displayTableId, null);
 
   const tableCups = tables.map((table) => {
     const newCups = table.cups.map((cup) => {
@@ -28,7 +76,9 @@ const CupsList = () => {
   });
 
   const cups = tableCups.flat();
-
+  const selectedCups = cups.filter((cup) => {
+    if (cup.tableId === displayTableID) return cup;
+  });
   return (
     <TableContainer component={Card}>
       <Table stickyHeader className={classes.table}>
@@ -37,14 +87,42 @@ const CupsList = () => {
             <TableCell align="center">Table ID</TableCell>
             <TableCell align="center">Cup ID</TableCell>
             <TableCell align="center">Level</TableCell>
+            <TableCell align="center">Drink</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {cups.map((cup) => (
+          {selectedCups.map((cup) => (
             <TableRow key={cup.id}>
               <TableCell align="center">{cup.tableId}</TableCell>
               <TableCell align="center">{cup.id}</TableCell>
               <TableCell align="center">{cup.level}</TableCell>
+
+              <TableCell>
+                <Select
+                  value={getDrinkDescription(cup.drinkId)}
+                  onChange={(evt, key, payload) => {
+                    dispatch(updateDrink(tables, cup.id, key.key));
+                    //key.key = drinkId
+                    //cup.id = coasterid
+                    
+                    var url = 'http://192.168.0.32/ws/coaster/update/updateAll.php?coasterId=' + cup.id + '&drinkId=' + key.key;
+                    axios.post(url);
+                  }
+                      
+                }
+                  style={{ minWidth: 120 }}
+                >
+                  {drinkInfo.map((drink) => (
+                    <MenuItem
+                      key={drink.drinkId}
+                      value={drink.drinkDescription}
+                      alignItems="center"
+                    >
+                      {drink.drinkDescription}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

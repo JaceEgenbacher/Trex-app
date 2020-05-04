@@ -1,31 +1,45 @@
-import { Rect, Group } from 'react-konva';
+import { Rect, Group, Text } from 'react-konva';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
-const cupSize = 50;
+import { useDispatch, useSelector } from 'react-redux';
 
-const levelToColor = (level) => {
-  let color = 'green';
+import actionTypes from '../lib/actionTypes';
 
-  if (level < 0.5) {
-    color = 'yellow';
+import axios from 'axios';
+
+
+const cupSize = 25;
+
+function levelToColor(level) {
+  const perc = level * 100;
+
+  let r = 0;
+  let g = 0;
+  const b = 0;
+
+  if (perc < 50) {
+    r = 255;
+    g = Math.round(5.1 * perc);
+  } else {
+    r = Math.round(510 - 5.1 * perc);
+    g = 255;
   }
 
-  if (level < 0.2) {
-    color = 'red';
-  }
-
-  return color;
-};
+  const h = r * 0x10000 + g * 0x100 + b * 0x1;
+  return '#' + ('000000' + h.toString(16)).slice(-6);
+}
 
 function organizeData({ cups, x, y }) {
-  const cupsLength = cups.length;
+  const cupsClone = [...cups];
+
+  const cupsLength = cupsClone.length;
   const halfCupsLength = Math.ceil(cupsLength / 2);
 
-  const bottom = cups.splice(halfCupsLength, cups.length);
-  const top = cups;
+  const bottom = cupsClone.splice(halfCupsLength, cups.length);
+  const top = cupsClone;
 
   const cupRows = [top, bottom];
 
@@ -37,8 +51,6 @@ function organizeData({ cups, x, y }) {
 
       const newCup = {
         ...cup,
-        x,
-        y,
         xPixelOffset,
         yPixelOffset,
       };
@@ -50,21 +62,95 @@ function organizeData({ cups, x, y }) {
   return coordCupRows.flat();
 }
 
-const TableShape = ({ table }) => {
-  const cups = organizeData(table);
+function updateTablePos(tables, id, x, y) {
+  const newTables = _.map(tables, (theTable) => {
+    if (theTable.id === id) {
+      const newTable = { ...theTable };
+
+      newTable.x = x;
+      newTable.y = y;
+
+      return newTable;
+    }
+
+    return theTable;
+  });
+
+  return {
+    type: actionTypes.UPDATE_TABLES,
+    tables: newTables,
+  };
+}
+
+function roundToFifty(num, scale) {
+  const scaling = 25 * scale;
+  return Math.round(num / scaling) * scaling;
+}
+
+const TableShape = ({ table, scale }) => {
+  const isDrag = useSelector((state) => state.dragTableId, null);
+  const flattenedCups = organizeData(table);
+
+  const tables = useSelector((state) => state.tables);
   const dispatch = useDispatch();
 
+  function dragBounds(pos) {
+    return {
+      x: roundToFifty(pos.x, scale),
+      y: roundToFifty(pos.y, scale),
+    };
+  }
+
   return (
-    <Group>
-      {cups.map((cup) => (
-        <Rect
-          key={cup.id}
-          x={cup.x + cup.xPixelOffset}
-          y={cup.y + cup.yPixelOffset}
-          width={cupSize}
-          height={cupSize}
-          fill={levelToColor(cup.level)}
-        />
+    <Group
+      draggable
+      onMouseDown={() => {
+        dispatch({
+          type: actionTypes.UPDATE_DISPLAY,
+          displayTableId: table.id,
+        });
+      }}
+      onDragStart={() => {
+        const displayTableId = table.id;
+        dispatch({ type: actionTypes.UPDATE_DRAG, dragTableId: table.id });
+      }}
+      onDragEnd={(e) => {
+        const x = e.target.x();
+        const y = e.target.y();
+        dispatch(updateTablePos(tables, table.id, x, y));
+        dispatch({ type: actionTypes.UPDATE_DRAG, dragTableId: null });
+        
+        
+        //post info to the database
+        var url = 'http://192.168.0.32/ws/tableLayout/update/updateTable.php?tableNumber=' + table.id + '&x=' + parseInt(x) + '&y=' + parseInt(y);
+        //console.log(url);
+        axios.post(url);
+      }}
+      key={table.id}
+      x={table.x}
+      y={table.y}
+      dragBoundFunc={dragBounds}
+      dragDistance={50}
+      shadowBlur={table.id === isDrag ? 10 : 0}
+    >
+      {flattenedCups.map((cup) => (
+        <Group x={cup.xPixelOffset} y={cup.yPixelOffset} key={cup.id}>
+          <Rect
+            width={cupSize}
+            height={cupSize}
+            fill={levelToColor(cup.level)}
+            stroke={table.id === isDrag ? 'red' : 'gray'}
+            strokeWidth={1}
+          />
+          <Text
+            text={cup.id}
+            fontSize={12}
+            align="center"
+            verticalAlign="middle"
+            width={cupSize}
+            height={cupSize}
+          />
+        </Group>
       ))}
     </Group>
   );
@@ -72,6 +158,7 @@ const TableShape = ({ table }) => {
 
 TableShape.propTypes = {
   table: PropTypes.object,
+  scale: PropTypes.number,
 };
 
 export default TableShape;

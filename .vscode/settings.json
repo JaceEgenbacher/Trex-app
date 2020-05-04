@@ -5,4 +5,7 @@
     "eslint.format.enable": true,
     "editor.formatOnSave": true,
     "eslint.alwaysShowStatus": true,
+    "extensions.ignoreRecommendations": true,
+    "files.autoSave": "off",
+    "debug.allowBreakpointsEverywhere": true,
 }
