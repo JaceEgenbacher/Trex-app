@@ -9,7 +9,7 @@
     "chart.js": "^2.9.3",
     "konva": "^4.2.2",
     "lodash": "^4.17.15",
-    "next": "^9.3.6",
+    "next": "^13.0.2",
     "node-fetch": "^2.6.0",
     "react": "^16.13.0",
     "react-chartjs-2": "^2.9.0",
